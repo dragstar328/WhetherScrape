@@ -13,7 +13,7 @@ class TenkiJpSpieder(BaseSpider):
 	
 	def parse(self, response):
 		item = WhetherscrapeItem()
-		item['date_time'] = response.xpath('//tr[@class="hour"]').extract()
+		item['jikoku'] = response.xpath('//tr[@class="hour"]').extract()
 		item['kion'] = response.xpath('//tr[@class="temperature"]').extract()
 		item['shitsudo'] = response.xpath('//tr[@class="humidity"]').extract()
 		yield item

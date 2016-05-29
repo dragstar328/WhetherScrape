@@ -9,7 +9,7 @@ import scrapy
 
 
 class WhetherscrapeItem(scrapy.Item):
-    date_time = scrapy.Field()
+    jikoku = scrapy.Field()
     kion = scrapy.Field()
     shitsudo = scrapy.Field()
 
