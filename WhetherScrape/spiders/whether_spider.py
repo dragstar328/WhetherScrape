@@ -3,6 +3,7 @@ from scrapy.spider import BaseSpider
 from scrapy.selector import HtmlXPathSelector
 from scrapy.http.request import Request
 from WhetherScrape.items import WhetherscrapeItem
+from scrapy.selector import Selector
 
 class TenkiJpSpieder(BaseSpider):
 	name = "TenkiJp"
@@ -13,9 +14,15 @@ class TenkiJpSpieder(BaseSpider):
 	
 	def parse(self, response):
 		item = WhetherscrapeItem()
+		sel = Selector(response)
+		
+		item['body'] = response.xpath('//table[@class="leisurePinpointWeather mb10"]/thead/tr/td/div/p/text()').extract()
+		item['body2'] = response.xpath('//table[@class="leisurePinpointWeather"]/thead/tr/td/div/p/text()').extract()
 		item['jikoku'] = response.xpath('//tr[@class="hour"]').extract()
 		item['kion'] = response.xpath('//tr[@class="temperature"]').extract()
 		item['shitsudo'] = response.xpath('//tr[@class="humidity"]').extract()
+		
+		
 		yield item
 
 	

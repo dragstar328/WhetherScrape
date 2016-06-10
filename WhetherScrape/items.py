@@ -9,6 +9,8 @@ import scrapy
 
 
 class WhetherscrapeItem(scrapy.Item):
+    body = scrapy.Field()
+    body2 = scrapy.Field()
     jikoku = scrapy.Field()
     kion = scrapy.Field()
     shitsudo = scrapy.Field()
