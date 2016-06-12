@@ -16,12 +16,11 @@ class TenkiJpSpieder(BaseSpider):
 		item = WhetherscrapeItem()
 		sel = Selector(response)
 		
-		item['body'] = response.xpath('//table[@class="leisurePinpointWeather mb10"]/thead/tr/td/div/p/text()').extract()
-		item['body2'] = response.xpath('//table[@class="leisurePinpointWeather"]/thead/tr/td/div/p/text()').extract()
-		item['jikoku'] = response.xpath('//tr[@class="hour"]').extract()
-		item['kion'] = response.xpath('//tr[@class="temperature"]').extract()
-		item['shitsudo'] = response.xpath('//tr[@class="humidity"]').extract()
-		
+		item['body'] = sel.xpath('//table[@class="leisurePinpointWeather mb10"]/thead/tr/td/div/p/text()').extract()
+		item['body2'] = sel.xpath('//table[@class="leisurePinpointWeather"]/thead/tr/td/div/p/text()').extract()
+		item['jikoku'] = sel.xpath('//tr[@class="hour"]/td/span/text()').extract()
+		item['kion'] = sel.xpath('//tr[@class="temperature"]/td/span/text()').extract()
+		item['shitsudo'] = sel.xpath('//tr[@class="humidity"]/td/span/text()').extract()
 		
 		yield item
 
