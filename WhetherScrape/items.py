@@ -9,9 +9,9 @@ import scrapy
 
 
 class WhetherscrapeItem(scrapy.Item):
-    body = scrapy.Field()
-    body2 = scrapy.Field()
-    jikoku = scrapy.Field()
-    kion = scrapy.Field()
-    shitsudo = scrapy.Field()
+    body = scrapy.Field() # today and tommorow
+    body2 = scrapy.Field() # day after tommorow
+    kion = scrapy.Field() # all
+    shitsudo = scrapy.Field() # today
+    shitsudo2 = scrapy.Field() # tommorow and day after tommorow
 

@@ -1,3 +1,5 @@
 *.py[cod]
 *.json
 __pycache__
+*.sh
+*.log
