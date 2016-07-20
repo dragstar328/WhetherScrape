@@ -5,7 +5,7 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
-import MySQLdb
+import pymysql
 import json
 
 class WhetherscrapePipeline(object):
@@ -20,14 +20,16 @@ class WhetherscrapePipeline(object):
         h = j['host']
         d = j['db']
         
-        self.con = MySQLdb.connect(
+        self.con = pymysql.connect(
                      user=u,
                      passwd=p,
                      host=h,
-                     db=d)
+                     db=d,
+                     use_unicode=True,
+                     charset="utf8")
         self.cur = self.con.cursor()
         
-        self.insert_sql = "INSERT INTO yohoutbl2 values(%s, %s, %s, %s)"
+        self.insert_sql = "INSERT INTO yohoutbl2 values(%s, %s, %s, %s, %s, %s, %s, %s, %s)"
         self.delete_sql = "DELETE from yohoutbl2 WHERE key_hiduke = %s"
 
     def process_item(self, item, spider):
@@ -72,16 +74,46 @@ class WhetherscrapePipeline(object):
         hum_list3 = n[24:48]
         print(hum_list3)
         
+        n = item['wheather']
+        whether_list1 = n[0:24]
+        whether_list2 = n[24:48]
+        whether_list3 = n[48:72]
+        print(whether_list1)
+        
+        n = item['prob_precip']
+        prob_precip_list1 = n[0:24]
+        prob_precip_list2 = n[24:48]
+        prob_precip_list3 = n[48:72]
+        print(prob_precip_list1)
+        
+        n = item['precipitation']
+        precipitation_list1 = n[0:24]
+        precipitation_list2 = n[24:48]
+        precipitation_list3 = n[48:72]
+        print(precipitation_list1)
+        
+        n = item['wind_blow']
+        wind_blow_list1 = n[0:24]
+        n = item['wind_blow2']
+        wind_blow_list2 = n[0:24]
+        wind_blow_list3 = n[24:48]
+        print(wind_blow_list1)
+        
+        n = item['wind_speed']
+        wind_speed_list1 = n[0:24]
+        wind_speed_list2 = n[24:48]
+        wind_speed_list3 = n[48:72]
+        print(wind_speed_list1)
         
         # today
         # select
-        self.insertdb(ymd1, kion_list1, hum_list1)
+        self.insertdb(ymd1, kion_list1, hum_list1, whether_list1, prob_precip_list1, precipitation_list1, wind_blow_list1, wind_speed_list1)
         
         # tommorow
-        self.insertdb(ymd2, kion_list2, hum_list2)
+        self.insertdb(ymd2, kion_list2, hum_list2, whether_list2, prob_precip_list2, precipitation_list2, wind_blow_list2, wind_speed_list2)
         
         # day after tommorow
-        self.insertdb(ymd3, kion_list3, hum_list3)
+        self.insertdb(ymd3, kion_list3, hum_list3, whether_list3, prob_precip_list3, precipitation_list3, wind_blow_list3, wind_speed_list3)
         
         self.con.commit();
         self.cur.close
@@ -89,13 +121,13 @@ class WhetherscrapePipeline(object):
         
         return item
         
-    def insertdb(self, ymd, kion, hum):
+    def insertdb(self, ymd, kion, hum, whether, prob_prec, precip, wind_blow, wind_speed ):
         # delete
         self.cur.execute(self.delete_sql, (ymd,))
         
         for i in range(0,24):
             #insert
-            tpl = (ymd, i+1, kion[i], hum[i])
+            tpl = (ymd, i+1, kion[i], hum[i], whether[i], prob_prec[i], precip[i], wind_blow[i], wind_speed[i])
             self.cur.execute(self.insert_sql, tpl)
 
 

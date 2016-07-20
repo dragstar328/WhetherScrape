@@ -15,3 +15,10 @@ class WhetherscrapeItem(scrapy.Item):
     shitsudo = scrapy.Field() # today
     shitsudo2 = scrapy.Field() # tommorow and day after tommorow
 
+    wheather = scrapy.Field() # tenki all
+    prob_precip = scrapy.Field() # kousui kakuritsu all
+    precipitation = scrapy.Field() # kousuiryou all
+    wind_blow = scrapy.Field() # kazamuki all
+    wind_blow2 = scrapy.Field() # kazamuki tommorow and day after tommorow
+    wind_speed = scrapy.Field() # fuusoku all
+

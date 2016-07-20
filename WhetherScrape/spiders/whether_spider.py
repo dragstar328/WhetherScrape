@@ -23,6 +23,13 @@ class TenkiJpSpider(scrapy.Spider):
 		item['shitsudo'] = sel.xpath('//tr[@class="humidity"]/td/span/text()').extract()
 		item['shitsudo2'] = sel.xpath('//tr[@class="humidity"]/td/text()').extract()
 		
+		item['wheather'] = sel.xpath('//tr[@class="weather"]/td/p/text()').extract()
+		item['prob_precip'] = sel.xpath('//tr[@class="prob_precip"]/td/span/text()').extract()
+		item['precipitation'] = sel.xpath('//tr[@class="precipitation"]/td/span/text()').extract()
+		item['wind_blow'] = sel.xpath('//tr[@class="windBlow"]/td/p/text()').extract()
+		item['wind_blow2'] = sel.xpath('//tr[@class="windBlow"]/td/p/span/text()').extract()
+		item['wind_speed'] = sel.xpath('//tr[@class="windSpeed"]/td/span/text()').extract()
+
 		yield item
 
 	
